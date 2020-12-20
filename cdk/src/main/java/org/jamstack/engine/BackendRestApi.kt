@@ -1,4 +1,4 @@
-package org.jamstack.common
+package org.jamstack.engine
 
 import software.amazon.awscdk.core.Construct
 import software.amazon.awscdk.services.apigateway.LambdaRestApi

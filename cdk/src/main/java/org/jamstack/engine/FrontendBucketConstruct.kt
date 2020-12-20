@@ -1,4 +1,4 @@
-package org.jamstack.common
+package org.jamstack.engine
 
 import software.amazon.awscdk.core.CfnOutput
 import software.amazon.awscdk.core.CfnOutputProps
