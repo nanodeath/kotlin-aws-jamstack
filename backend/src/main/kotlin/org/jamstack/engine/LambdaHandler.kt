@@ -30,9 +30,6 @@ class LambdaHandler : RequestStreamHandler {
     private val singletonModule = module(createdAtStart = true) {
         single { objectMapper }
         single { responseGenerator }
-    }
-
-    private val userSingletonModule = module {
         this.configureSingletonBindings()
     }
 
@@ -43,18 +40,12 @@ class LambdaHandler : RequestStreamHandler {
      */
     private fun requestModule(request: APIGatewayProxyRequestEvent) = module {
         single { request }
-    }
-
-    /**
-     * See [org.jamstack.config.configureRequestBindings].
-     */
-    private val userRequestModule = module {
         this.configureRequestBindings()
     }
 
     private val koinApp = startKoin {
         printLogger()
-        modules(singletonModule, userSingletonModule)
+        modules(singletonModule)
     }
 
     override fun handleRequest(input: InputStream, output: OutputStream, context: Context) {
@@ -62,7 +53,7 @@ class LambdaHandler : RequestStreamHandler {
         val pathParameters: Map<String, String>? = request.pathParameters
 
         val requestModule = requestModule(request)
-        koinApp.modules(requestModule, userRequestModule)
+        koinApp.modules(requestModule)
         try {
             val route = router.resolve(pathParameters?.get("proxy").orEmpty())
             if (route != null) {
@@ -76,7 +67,7 @@ class LambdaHandler : RequestStreamHandler {
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            koinApp.unloadModules(listOf(requestModule, userRequestModule))
+            koinApp.unloadModules(listOf(requestModule))
         }
     }
 
