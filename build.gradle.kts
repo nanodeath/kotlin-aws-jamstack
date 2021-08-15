@@ -1,9 +1,10 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.21"
-    // run `./gradlew dependencyUpdates -Drevision=release` to find newer versions of dependencies.
-    id("com.github.ben-manes.versions") version "0.36.0"
+    kotlin("jvm") version "1.5.21"
+    // run `./gradlew dependencyUpdates` to find newer versions of dependencies.
+    id("com.github.ben-manes.versions") version "0.39.0"
 }
 
 group = "org.jamstack"
@@ -36,4 +37,17 @@ tasks.register<Exec>("deploy") {
     group = "deploy"
     workingDir = projectDir.resolve("cdk")
     commandLine = listOf("cdk", "deploy", "--require-approval", "never", "--all")
+}
+
+fun isNonStable(version: String): Boolean {
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+    val isStable = stableKeyword || regex.matches(version)
+    return isStable.not()
+}
+
+tasks.withType<DependencyUpdatesTask> {
+    rejectVersionIf {
+        isNonStable(candidate.version) && !isNonStable(currentVersion)
+    }
 }

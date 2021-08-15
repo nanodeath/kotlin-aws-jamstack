@@ -9,9 +9,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <cdk.version>1.74.0</cdk.version>
-        <junit.version>5.7.0</junit.version>
-        <kotlin.version>1.4.21</kotlin.version>
+        <cdk.version>1.118.0</cdk.version>
+        <junit.version>5.7.2</junit.version>
+        <kotlin.version>1.5.21</kotlin.version>
     </properties>
 
     <build>

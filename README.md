@@ -15,7 +15,7 @@ Finally, there's an infrastructure module that uses the CDK to wire everything u
 
 If these catch your eye, this project might be for you.
 
-* Kotlin 1.4
+* Kotlin 1.5
   * kotlinx.html
   * kotlinx.serialization
 * Sass
@@ -25,7 +25,7 @@ If these catch your eye, this project might be for you.
   * API Gateway
   * CDK
 * Koin
-* jackson-jr
+* jackson
 * kotlin-logging, log4j2, slf4j
 * JUnit 5
 * AssertJ

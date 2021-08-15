@@ -57,7 +57,7 @@ class LambdaHandler : RequestStreamHandler {
         try {
             val route = router.resolve(pathParameters?.get("proxy").orEmpty())
             if (route != null) {
-                val controller = koinApp.koin.get(route.controller)
+                val controller = koinApp.koin.get<Controller>(route.controller)
                 var response = controller.invoke()
                 response = processInterceptors(route, request, response)
                 output.bufferedWriter().use { objectMapper.writeValue(it, response) }

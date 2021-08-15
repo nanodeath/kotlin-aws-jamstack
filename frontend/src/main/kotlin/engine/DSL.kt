@@ -7,7 +7,7 @@ fun HEAD.externalStyleLink(url: String, integrity: String): Unit = link {
     attributes["crossorigin"] = "anonymous"
 }
 
-fun FlowOrPhrasingOrMetaDataContent.externalScript(
+fun FlowOrMetaDataOrPhrasingContent.externalScript(
     src: String,
     integrity: String
 ): Unit = script {

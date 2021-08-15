@@ -8,14 +8,14 @@ plugins {
 
 repositories {
     mavenCentral()
-    jcenter()
+    maven { url = uri("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven") }
 }
 
 val kotlinxHtmlVersion: String by extra
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:$kotlinxHtmlVersion")
-    implementation("org.eclipse.jetty:jetty-server:9.4.34.v20201102")
+    implementation("org.eclipse.jetty:jetty-server:11.0.6")
 }
 
 idea {
@@ -41,8 +41,8 @@ val compileCss = tasks.register<Exec>("compileCss") {
 
 val generateHtml = tasks.register<JavaExec>("generateHtml") {
     group = "build"
-    main = "ApplicationKt"
-    description = "Generate HTML by invoking $main"
+    mainClass.set("ApplicationKt")
+    description = "Generate HTML by invoking $mainClass"
     classpath = sourceSets["main"].runtimeClasspath
     args = listOf(staticOutputDirectory.toString())
     outputs.dir(staticOutputDirectory)
@@ -69,7 +69,7 @@ tasks.register<JavaExec>("server") {
     description = "Start DevServer, for local development."
     classpath = sourceSets["main"].runtimeClasspath
     args = listOf(staticOutputDirectory.toString())
-    main = "engine.DevServerKt"
+    mainClass.set("engine.DevServerKt")
 }
 
 fun File.withExtension(ext: String): File = resolveSibling("$nameWithoutExtension.$ext")

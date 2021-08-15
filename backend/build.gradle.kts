@@ -4,18 +4,17 @@ buildscript {
     repositories {
         mavenCentral()
         google()
-        jcenter()
     }
     dependencies {
-        classpath("com.guardsquare:proguard-gradle:7.0.1")
+        classpath("com.guardsquare:proguard-gradle:7.1.1")
     }
 }
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
-    kotlin("plugin.serialization") version "1.4.21"
+    kotlin("plugin.serialization") version "1.5.21"
     id("org.jetbrains.kotlin.kapt")
-    id("com.github.johnrengelman.shadow") version "6.1.0"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
 version = "0.1"
@@ -28,35 +27,34 @@ val log4jVersion: String by project
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
-    implementation(platform("software.amazon.awssdk:bom:2.15.50"))
+    implementation(platform("software.amazon.awssdk:bom:2.17.19"))
     implementation("software.amazon.awssdk:dynamodb")
     implementation("software.amazon.awssdk:s3")
     implementation("software.amazon.awssdk:url-connection-client")
-    implementation("com.amazonaws:aws-lambda-java-events:3.7.0")
+    implementation("com.amazonaws:aws-lambda-java-events:3.9.0")
     implementation("com.amazonaws:aws-lambda-java-core:1.2.1")
 
     // Serialization
     // Use kotlinx.serialization when you can; Jackson when you must
-    implementation("com.fasterxml.jackson.jr:jackson-jr-objects:$jacksonVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
 
-    implementation("org.koin:koin-core:$koinVersion")
+    implementation("io.insert-koin:koin-core:$koinVersion")
 
-    implementation("io.github.microutils:kotlin-logging-jvm:2.0.4")
+    implementation("io.github.microutils:kotlin-logging-jvm:2.0.10")
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j18-impl:$log4jVersion")
     runtimeOnly("com.amazonaws:aws-lambda-java-log4j2:1.2.0")
 
-    testImplementation(platform("org.junit:junit-bom:5.7.0"))
+    testImplementation(platform("org.junit:junit-bom:5.7.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("io.mockk:mockk:1.10.3")
-    testImplementation("org.assertj:assertj-core:3.18.1")
-    testImplementation("org.koin:koin-test:$koinVersion")
+    testImplementation("io.mockk:mockk:1.12.0")
+    testImplementation("org.assertj:assertj-core:3.20.2")
+    testImplementation("io.insert-koin:koin-core:$koinVersion")
 }
 
 tasks.test {
@@ -75,6 +73,8 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "11"
     }
 }
+
+kapt.includeCompileClasspath = false
 
 // Using Proguard shaves off less size than you might expect, but you can use it if you like.
 tasks.register<proguard.gradle.ProGuardTask>("proguard") {
