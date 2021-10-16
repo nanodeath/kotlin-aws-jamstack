@@ -12,9 +12,9 @@ buildscript {
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
-    kotlin("plugin.serialization") version "1.5.21"
+    kotlin("plugin.serialization") version "1.5.31"
     id("org.jetbrains.kotlin.kapt")
-    id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("com.github.johnrengelman.shadow") version "7.1.0"
 }
 
 version = "0.1"
@@ -30,30 +30,30 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("software.amazon.awssdk:bom:2.17.19"))
+    implementation(platform("software.amazon.awssdk:bom:2.17.61"))
     implementation("software.amazon.awssdk:dynamodb")
     implementation("software.amazon.awssdk:s3")
     implementation("software.amazon.awssdk:url-connection-client")
-    implementation("com.amazonaws:aws-lambda-java-events:3.9.0")
+    implementation("com.amazonaws:aws-lambda-java-events:3.10.0")
     implementation("com.amazonaws:aws-lambda-java-core:1.2.1")
 
     // Serialization
     // Use kotlinx.serialization when you can; Jackson when you must
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 
     implementation("io.insert-koin:koin-core:$koinVersion")
 
-    implementation("io.github.microutils:kotlin-logging-jvm:2.0.10")
+    implementation("io.github.microutils:kotlin-logging-jvm:2.0.11")
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j18-impl:$log4jVersion")
     runtimeOnly("com.amazonaws:aws-lambda-java-log4j2:1.2.0")
 
-    testImplementation(platform("org.junit:junit-bom:5.7.2"))
+    testImplementation(platform("org.junit:junit-bom:5.8.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("io.mockk:mockk:1.12.0")
-    testImplementation("org.assertj:assertj-core:3.20.2")
+    testImplementation("org.assertj:assertj-core:3.21.0")
     testImplementation("io.insert-koin:koin-core:$koinVersion")
 }
 

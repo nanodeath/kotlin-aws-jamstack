@@ -15,7 +15,7 @@ val kotlinxHtmlVersion: String by extra
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:$kotlinxHtmlVersion")
-    implementation("org.eclipse.jetty:jetty-server:11.0.6")
+    implementation("org.eclipse.jetty:jetty-server:11.0.7")
 }
 
 idea {
